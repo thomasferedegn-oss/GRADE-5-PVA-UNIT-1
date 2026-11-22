@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የክወናና የዕይታ ጥበባት (5ኛ ክፍል) - Interactive Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans Ethiopic for crisp Amharic & English rendering -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for clean UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Ethiopic"', '"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Ethiopic', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 50%, #ecfdf5 100%);
+            min-height: 100vh;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+            animation: fadeSlideUp 0.35s ease-out forwards;
+        }
+        /* Custom scrollbar for question grid and review list */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-indigo-200 selection:text-indigo-900">
+
+    <!-- ==================== TOP NAVIGATION BAR ==================== -->
+    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+            <!-- Brand / Title -->
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-md shrink-0">
+                    <i class="fa-solid fa-palette text-lg"></i>
+                </div>
+                <div class="truncate">
+                    <h1 class="text-sm sm:text-base font-bold text-slate-900 truncate">የክወናና የዕይታ ጥበባት (5ኛ ክፍል)</h1>
+                    <p class="text-xs text-slate-500 truncate">Grade 5 Performing &amp; Visual Arts • 60 Questions</p>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Live Timer Pill (visible during quiz) -->
+                <div id="headerTimer" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 text-indigo-700 text-xs sm:text-sm font-semibold border border-indigo-100">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="timerDisplay">00:00</span>
+                </div>
+                <!-- Teacher Dashboard Toggle -->
+                <button id="teacherDashBtn" onclick="toggleTeacherDashboard()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all active:scale-95">
+                    <i class="fa-solid fa-chalkboard-user text-indigo-600"></i>
+                    <span class="hidden sm:inline">Teacher Dashboard</span>
+                    <span class="sm:hidden">Teacher</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN CONTAINER ==================== -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+
+        <!-- ==================== SCREEN 1: WELCOME & IDENTIFICATION ==================== -->
+        <section id="welcomeScreen" class="animate-fade-up">
+            <div class="bg-white rounded-3xl shadow-xl shadow-indigo-100/60 border border-slate-100 overflow-hidden">
+                <!-- Hero Banner -->
+                <div class="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 px-6 sm:px-10 py-8 sm:py-10 text-white relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-44 h-44 bg-white/10 rounded-full blur-2xl"></div>
+                    <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-emerald-400/20 rounded-full blur-2xl"></div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold tracking-wide mb-3">
+                            <i class="fa-solid fa-graduation-cap"></i> Grade 5 Assessment • 5ኛ ክፍል ምዘና
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight mb-2">
+                            የክወናና የዕይታ ጥበባት 60 የምርጫ ጥያቄዎች
+                        </h2>
+                        <p class="text-indigo-100 text-sm sm:text-base max-w-2xl">
+                            Interactive Performing &amp; Visual Arts Quiz with instant bilingual explanations (አማርኛ &amp; English), automatic grading, and teacher score reporting.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Features Highlights -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 px-6 sm:px-10 pt-6">
+                    <div class="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100 text-center">
+                        <i class="fa-solid fa-list-check text-indigo-600 text-lg mb-1"></i>
+                        <div class="text-sm font-bold text-slate-800">60 ጥያቄዎች</div>
+                        <div class="text-xs text-slate-500">All Items Covered</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-center">
+                        <i class="fa-solid fa-bolt text-emerald-600 text-lg mb-1"></i>
+                        <div class="text-sm font-bold text-slate-800">ፈጣን ግብረ-መልስ</div>
+                        <div class="text-xs text-slate-500">Instant Feedback</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-100 text-center">
+                        <i class="fa-solid fa-lock text-amber-600 text-lg mb-1"></i>
+                        <div class="text-sm font-bold text-slate-800">የማይቀየር መልስ</div>
+                        <div class="text-xs text-slate-500">Irreversible Choice</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-purple-50/70 border border-purple-100 text-center">
+                        <i class="fa-solid fa-language text-purple-600 text-lg mb-1"></i>
+                        <div class="text-sm font-bold text-slate-800">ሁለት ቋንቋ</div>
+                        <div class="text-xs text-slate-500">Amharic &amp; English</div>
+                    </div>
+                </div>
+
+                <!-- Student Identification Form -->
+                <div class="p-6 sm:p-10">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-id-card text-indigo-600"></i>
+                            የተማሪ መለያ መረጃ (Student Identification)
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                            ፈተናውን ከመጀመርዎ በፊት ሙሉ ስምዎን እና የመለያ ቁጥርዎን ያስገቡ። Please enter your Full Name and ID Number to begin.
+                        </p>
+                    </div>
+
+                    <form id="startForm" onsubmit="handleStartQuiz(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="studentName" class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    ሙሉ ስም (Full Name) <span class="text-rose-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                        <i class="fa-solid fa-user"></i>
+                                    </span>
+                                    <input type="text" id="studentName" required placeholder="ለምሳሌ፡ አበበ ከበደ / Abebe Kebede"
+                                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50/50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all text-sm sm:text-base">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="studentId" class="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    የመለያ ቁጥር (ID Number) <span class="text-rose-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                        <i class="fa-solid fa-hashtag"></i>
+                                    </span>
+                                    <input type="text" id="studentId" required placeholder="ለምሳሌ፡ G5-0142"
+                                        class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50/50 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all text-sm sm:text-base">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inline Error Message -->
+                        <div id="startError" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span>እባክዎ ሙሉ ስም እና የመለያ ቁጥር ያስገቡ! Please enter both your Full Name and ID Number.</span>
+                        </div>
+
+                        <!-- Instructions Notice -->
+                        <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs sm:text-sm text-amber-900 flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 text-base shrink-0"></i>
+                            <div>
+                                <strong>ማሳሰቢያ (Important):</strong> አንዴ መልስ ከመረጡ በኋላ መቀየር አይቻልም (Answers are irreversible once selected)። ትክክለኛው መልስ እና ዝርዝር ማብራሪያ ወዲያውኑ ይታያል። You can skip questions and return to them anytime using the Back or Grid buttons.
+                            </div>
+                        </div>
+
+                        <!-- Start Button -->
+                        <button type="submit" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-base sm:text-lg shadow-lg shadow-indigo-200 hover:shadow-xl transition-all active:scale-[0.99] flex items-center justify-center gap-3">
+                            <span>ፈተናውን ጀምር (Start Quiz)</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SCREEN 2: ACTIVE QUIZ ==================== -->
+        <section id="quizScreen" class="hidden animate-fade-up space-y-5">
+            <!-- Student & Progress Strip -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <div class="flex items-center gap-2.5 text-sm">
+                        <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-xs">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </span>
+                        <div>
+                            <div id="displayStudentName" class="font-bold text-slate-800 leading-tight"></div>
+                            <div id="displayStudentId" class="text-xs text-slate-500"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                        <span class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-700">
+                            የተመለሱ: <span id="statAnswered">0</span>/60
+                        </span>
+                        <span class="px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700">
+                            <i class="fa-solid fa-check mr-1"></i><span id="statCorrect">0</span>
+                        </span>
+                        <span class="px-3 py-1.5 rounded-full bg-rose-100 text-rose-700">
+                            <i class="fa-solid fa-xmark mr-1"></i><span id="statWrong">0</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-5 sm:p-8">
+                <!-- Question Header -->
+                <div class="flex items-center justify-between gap-2 mb-5">
+                    <div class="flex items-center gap-2">
+                        <span id="questionNumberBadge" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs sm:text-sm font-bold shadow-sm">
+                            ጥያቄ 1 / 60
+                        </span>
+                        <span id="questionCategoryBadge" class="px-3 py-1.5 rounded-xl bg-violet-50 text-violet-700 border border-violet-100 text-xs font-semibold">
+                            Visual Arts
+                        </span>
+                    </div>
+                    <button onclick="toggleQuestionMap()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-all">
+                        <i class="fa-solid fa-grid-2 text-indigo-600"></i>
+                        <span>ሁሉም ጥያቄዎች (Map)</span>
+                    </button>
+                </div>
+
+                <!-- Question Text -->
+                <h3 id="questionText" class="text-lg sm:text-xl font-bold text-slate-900 leading-relaxed mb-6">
+                    <!-- Injected via JS -->
+                </h3>
+
+                <!-- Clickable Option Buttons -->
+                <div id="optionsContainer" class="grid grid-cols-1 gap-3">
+                    <!-- Injected via JS -->
+                </div>
+
+                <!-- Instant Feedback & Bilingual Explanation Box -->
+                <div id="feedbackBox" class="hidden mt-6 rounded-2xl border p-5 animate-fade-up">
+                    <div id="feedbackHeader" class="flex items-center gap-2.5 font-bold text-base mb-3">
+                        <!-- Injected via JS -->
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-xl bg-white/90 border border-slate-200/80 shadow-sm">
+                            <div class="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-open"></i> ማብራሪያ (አማርኛ)
+                            </div>
+                            <p id="explanationAm" class="text-slate-700 leading-relaxed"></p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/90 border border-slate-200/80 shadow-sm">
+                            <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1.5 flex items-center gap-1.5">
+                                <i class="fa-solid fa-globe"></i> Explanation (English)
+                            </div>
+                            <p id="explanationEn" class="text-slate-700 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+                <!-- Back Button -->
+                <button id="backBtn" onclick="prevQuestion()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 font-semibold text-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>ወደ ኋላ (Back)</span>
+                </button>
+
+                <div class="flex items-center gap-2.5 ml-auto">
+                    <!-- Jump Next / Skip Button -->
+                    <button id="nextBtn" onclick="nextQuestion()" class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-200 transition-all flex items-center gap-2">
+                        <span id="nextBtnLabel">ዝለል / ቀጣይ (Skip / Next)</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <!-- Submit Quiz Button -->
+                    <button id="submitQuizBtn" onclick="openSubmitModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-sm shadow-md shadow-emerald-200 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>አስረክብ (Submit)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Expandable 60-Question Navigator Grid -->
+            <div id="questionMapPanel" class="hidden bg-white rounded-3xl p-5 sm:p-6 shadow-lg border border-slate-200 animate-fade-up">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <h4 class="font-bold text-slate-800 text-sm sm:text-base">የጥያቄዎች ዝርዝር (Question Navigator 1–60)</h4>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-600">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> ትክክል (Correct)</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> ስህተት (Wrong)</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-300 inline-block"></span> የታለፈ (Skipped)</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span> ያልታየ (Unvisited)</span>
+                    </div>
+                </div>
+                <div id="questionMapGrid" class="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-2">
+                    <!-- 60 buttons injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SCREEN 3: RESULTS & EMAIL SUBMISSION ==================== -->
+        <section id="resultScreen" class="hidden animate-fade-up space-y-6">
+            <div class="bg-white rounded-3xl shadow-xl shadow-indigo-100/70 border border-slate-100 overflow-hidden">
+                <!-- Result Banner -->
+                <div class="bg-gradient-to-r from-indigo-600 via-violet-600 to-emerald-600 px-6 sm:px-10 py-8 text-white text-center">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm text-3xl mb-3 shadow-inner">
+                        <i id="resultTrophyIcon" class="fa-solid fa-trophy text-amber-300"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-1">ፈተናው ተጠናቋል! (Quiz Completed!)</h2>
+                    <p id="resultStudentMeta" class="text-indigo-100 text-sm sm:text-base font-medium"></p>
+                </div>
+
+                <!-- Score Summary Cards -->
+                <div class="p-6 sm:p-8">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-100 text-center">
+                            <div class="text-xs font-semibold text-indigo-600 uppercase">ውጤት (Score)</div>
+                            <div id="resScore" class="text-2xl sm:text-3xl font-extrabold text-indigo-900 mt-1">0/60</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
+                            <div class="text-xs font-semibold text-emerald-600 uppercase">መቶኛ (Percent)</div>
+                            <div id="resPercent" class="text-2xl sm:text-3xl font-extrabold text-emerald-900 mt-1">0%</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100 text-center">
+                            <div class="text-xs font-semibold text-amber-600 uppercase">ደረጃ (Grade)</div>
+                            <div id="resGrade" class="text-xl sm:text-2xl font-extrabold text-amber-900 mt-1">-</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+                            <div class="text-xs font-semibold text-slate-500 uppercase">ጊዜ (Time)</div>
+                            <div id="resTime" class="text-2xl sm:text-3xl font-extrabold text-slate-800 mt-1">00:00</div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Breakdown Bar -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold mb-8 p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+                        <span class="text-emerald-700"><i class="fa-solid fa-circle-check mr-1.5"></i>ትክክል (Correct): <strong id="resCorrectCount">0</strong></span>
+                        <span class="text-rose-700"><i class="fa-solid fa-circle-xmark mr-1.5"></i>ስህተት (Wrong): <strong id="resWrongCount">0</strong></span>
+                        <span class="text-amber-700"><i class="fa-solid fa-circle-minus mr-1.5"></i>ያልተመለሰ (Unanswered): <strong id="resUnansweredCount">0</strong></span>
+                    </div>
+
+                    <!-- Email Submission Section -->
+                    <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-emerald-50 border border-indigo-200/80 mb-6">
+                        <h3 class="font-bold text-slate-900 text-base sm:text-lg mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-envelope-circle-check text-indigo-600"></i>
+                            ውጤትዎን ለመምህሩ በኢሜል ይላኩ (Send Score to Teacher)
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-4">
+                            ውጤትዎ በቀጥታ ወደ <strong class="text-indigo-700">mesayferedegn2@gmail.com</strong> እንዲላክ ከታች ያለውን ቁልፍ ይጫኑ። Click below to open your email app with your score pre-filled, or copy the report.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <a id="emailScoreLink" href="#" class="flex-1 min-w-[200px] py-3.5 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm text-center shadow-md shadow-indigo-200 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>በኢሜል ላክ (Send via Email)</span>
+                            </a>
+                            <button onclick="copyScoreReport()" class="flex-1 min-w-[200px] py-3.5 px-5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-copy text-indigo-600"></i>
+                                <span>ሪፖርቱን ቅዳ (Copy Report)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <button onclick="toggleReviewSection()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass text-indigo-600"></i>
+                            <span>ሁሉንም መልሶች ገምግም (Review All 60 Answers)</span>
+                        </button>
+                        <button onclick="resetForNewStudent()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            <span>አዲስ ተማሪ (New Attempt)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Answer Review Container -->
+            <div id="reviewSection" class="hidden space-y-4 animate-fade-up">
+                <h3 class="text-lg font-bold text-slate-800 px-1">ዝርዝር የመልሶች ግምገማ (Detailed Answer Review)</h3>
+                <div id="reviewList" class="space-y-4">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SCREEN 4: TEACHER DASHBOARD ==================== -->
+        <section id="teacherScreen" class="hidden animate-fade-up space-y-6">
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                <div class="bg-slate-900 text-white px-6 sm:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Instructor Portal</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold flex items-center gap-2 mt-0.5">
+                            <i class="fa-solid fa-chalkboard-user text-indigo-400"></i>
+                            የመምህር ውጤት ዳሽቦርድ (Teacher Results Dashboard)
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Teacher Email: mesayferedegn2@gmail.com</p>
+                    </div>
+                    <button onclick="closeTeacherDashboard()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>ወደ ፈተናው ተመለስ (Back)</span>
+                    </button>
+                </div>
+
+                <div class="p-6 sm:p-8">
+                    <!-- Class Analytics Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-100">
+                            <div class="text-xs font-semibold text-indigo-600">ጠቅላላ ተማሪዎች (Students)</div>
+                            <div id="dashTotalStudents" class="text-2xl font-extrabold text-indigo-900 mt-1">0</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+                            <div class="text-xs font-semibold text-emerald-600">አማካይ ውጤት (Average)</div>
+                            <div id="dashAvgScore" class="text-2xl font-extrabold text-emerald-900 mt-1">0%</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-100">
+                            <div class="text-xs font-semibold text-amber-600">ከፍተኛ ውጤት (Highest)</div>
+                            <div id="dashHighScore" class="text-2xl font-extrabold text-amber-900 mt-1">0/60</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-violet-50 border border-violet-100">
+                            <div class="text-xs font-semibold text-violet-600">ያለፉ (Pass Rate ≥50%)</div>
+                            <div id="dashPassRate" class="text-2xl font-extrabold text-violet-900 mt-1">0%</div>
+                        </div>
+                    </div>
+
+                    <!-- Search & Export Controls -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div class="relative flex-1 min-w-[220px]">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="dashSearchInput" oninput="renderTeacherTable()" placeholder="በስም ወይም በመለያ ቁጥር ፈልግ (Search Name or ID)..."
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="exportTeacherCSV()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>Export CSV</span>
+                            </button>
+                            <button onclick="openClearDashModal()" class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Clear All</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results Table -->
+                    <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead class="bg-slate-50 text-slate-600 text-xs uppercase border-b border-slate-200">
+                                <tr>
+                                    <th class="py-3.5 px-4 font-bold">#</th>
+                                    <th class="py-3.5 px-4 font-bold">ሙሉ ስም (Full Name)</th>
+                                    <th class="py-3.5 px-4 font-bold">ID Number</th>
+                                    <th class="py-3.5 px-4 font-bold">ውጤት (Score)</th>
+                                    <th class="py-3.5 px-4 font-bold">መቶኛ (%)</th>
+                                    <th class="py-3.5 px-4 font-bold">ጊዜ (Time)</th>
+                                    <th class="py-3.5 px-4 font-bold">ቀን (Date)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacherTableBody" class="divide-y divide-slate-100 bg-white">
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== CUSTOM CONFIRMATION MODAL (No alert/confirm) ==================== -->
+    <div id="customModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-fade-up">
+            <div class="flex items-center gap-3 mb-3">
+                <div id="modalIconWrap" class="w-11 h-11 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+                    <i id="modalIcon" class="fa-solid fa-circle-question"></i>
+                </div>
+                <h3 id="modalTitle" class="text-lg font-bold text-slate-900">Confirm Action</h3>
+            </div>
+            <p id="modalMessage" class="text-sm text-slate-600 leading-relaxed mb-6"></p>
+            <div class="flex items-center justify-end gap-3">
+                <button onclick="closeModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+                    ሰርዝ (Cancel)
+                </button>
+                <button id="modalConfirmBtn" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md transition-all">
+                    አረጋግጥ (Confirm)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-xl text-sm font-medium flex items-center gap-2.5 animate-fade-up">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- ==================== APPLICATION LOGIC & ALL 60 QUESTIONS ==================== -->
+    <script>
+        /**
+         * Complete dataset of all 60 Grade 5 Performing & Visual Arts questions.
+         * Each item contains:
+         *  - id: Question number (1–60)
+         *  - cat: Subject domain
+         *  - q: Exact Amharic question text
+         *  - opts: Exact 4 options [ሀ, ለ, ሐ, መ]
+         *  - ans: 0-based index of the correct answer matching the official Answer Key
+         *  - expAm: Detailed explanation in Amharic
+         *  - expEn: Detailed explanation in English
+         */
+        const QUESTIONS = [
+            {
+                id: 1, cat: "Visual Arts",
+                q: "በሀገራችን ልዩ ልዩ ሐውልቶች ላይ ዕድሜን ለመገመት የሚያገለግለው የጥበብ ስራ የቱ ነው?",
+                opts: ["ውዝዋዜ", "የሐረግ ሥራ", "የቪዲዮ ቀረጻ", "ድራማ"],
+                ans: 1,
+                expAm: "የሐረግ ሥራ (ባህላዊ የጌጥ ንድፍ) በታሪካዊ ሐውልቶች፣ ጽሑፎችና ሕንፃዎች ላይ የሚገኝ ሲሆን የጥንታዊ ቅርሶችን ዕድሜና ዘመን ለመገመት ያገለግላል።",
+                expEn: "Traditional ornamental pattern work (Harege Sira) carved on Ethiopian monuments and historical artifacts helps historians estimate the age and era of those monuments."
+            },
+            {
+                id: 2, cat: "Theater",
+                q: "ከሚከተሉት የትያትር አላባውያን ያልሆነው የቱ ነው?",
+                opts: ["አዘጋጅ", "ከዋኞች", "ተደራሲያን", "ሐውልት"],
+                ans: 3,
+                expAm: "አዘጋጅ፣ ከዋኞች (ተዋንያን) እና ተደራሲያን (ተመልካቾች) ዋና ዋና የትያትር አላባውያን ናቸው። ሐውልት ግን የዕይታ ጥበብ/ቅርፃ ቅርፅ እንጂ የትያትር አላባዊ አይደለም።",
+                expEn: "The director, performers/actors, and audience are core elements of theater. A monument (statue) belongs to sculpture/visual arts, not theater elements."
+            },
+            {
+                id: 3, cat: "Music",
+                q: "መካከለኛ ወፍራም የሆነውና በታዳጊ ጎረምሶች የምንሰማው የድምጽ ምድብ የቱ ነው?",
+                opts: ["ቤዝ", "ሶፕራኖ", "ቴኖር", "አልቶ"],
+                ans: 2,
+                expAm: "ቴኖር (Tenor) ከፍ ያለ ወይም መካከለኛ ወፍራም የወንዶችና የታዳጊ ጎረምሶች የድምፅ ምድብ ነው። ቤዝ በጣም ወፍራም ሲሆን ሶፕራኖና አልቶ የሴቶች ድምፆች ናቸው።",
+                expEn: "Tenor is the moderately deep/high male voice range commonly heard in adolescent boys and adult men, positioned above bass and below alto/soprano."
+            },
+            {
+                id: 4, cat: "Visual Arts",
+                q: "ፊት ለፊት፣ ከጎንና ከላይ በኩል የሚታይ አድርጎ የማሳያ ዘዴ ምን ይባላል?",
+                opts: ["2ዲ", "1ዲ", "3ዲ", "4ዲ"],
+                ans: 2,
+                expAm: "ባለ ሦስት አውታረ መጠን (3ዲ) ርዝመት፣ ስፋት እና ጥልቀት (ቁመት) ስላለው አንድን ነገር ከፊት፣ ከጎንና ከላይ አቅጣጫ ማየት ያስችላል።",
+                expEn: "Three-dimensional (3D) representation includes height, width, and depth, allowing an object to be viewed from the front, side, and top."
+            },
+            {
+                id: 5, cat: "Film & Media",
+                q: "የቦታን፣ የጊዜንና የገጸ-ባህርይን የጥምረት ክንውን በጥቅል ለመግለጽ የሚጠቅመው የቀረጻ አይነት የቱ ነው?",
+                opts: ["የቅርብ እይታ", "የአጠቃላይ እይታ", "የመካከለኛ እይታ", "የሩቅ እይታ"],
+                ans: 3,
+                expAm: "የሩቅ እይታ (Long Shot) ገጸ-ባህርይውን ከሙሉ አካባቢውና ከጊዜው ሁኔታ ጋር በጥቅል በማሳየት የቦታ፣ የጊዜና የክንውን ጥምረትን ይገልጻል።",
+                expEn: "A Long Shot (የሩቅ እይታ) captures the character together with their surrounding setting, effectively communicating the combined context of place, time, and action."
+            },
+            {
+                id: 6, cat: "Music",
+                q: "እጅግ በጣም ቀጭን የሆኑ የህፃናትና የሴቶች ድምጽ ምድብ ምን ይባላል?",
+                opts: ["ሶፕራኖ", "አልቶ", "ቴኖር", "ቤዝ"],
+                ans: 0,
+                expAm: "ሶፕራኖ (Soprano) ከፍተኛውና እጅግ ቀጭን የሆነው የሴቶች እና የህፃናት የድምፅ ምድብ ነው።",
+                expEn: "Soprano is the highest and brightest vocal pitch range, typical of women and children."
+            },
+            {
+                id: 7, cat: "Music",
+                q: "የተለያዩ ድምፆች በኅብር ሁለትና ከእዚያ በላይ ተቀናጅተው የምናደምጣቸው ሙዚቃዎች ምን ይባላሉ?",
+                opts: ["ዜማ", "ቴምፖ", "ስልተ ምት", "ህብረ-ሙዚቃ (Harmony)"],
+                ans: 3,
+                expAm: "ህብረ-ሙዚቃ (Harmony) ሁለት ወይም ከዚያ በላይ የተለያዩ ድምፆች በአንድ ጊዜ ተዋህደውና ተቀናጅተው የሚፈጥሩት ውብ የሙዚቃ ድምፅ ነው።",
+                expEn: "Harmony occurs when two or more different pitches or voices are sounded simultaneously in a pleasing musical combination."
+            },
+            {
+                id: 8, cat: "Music",
+                q: "Presto የሚለው የፍጥነት ልኬት በደቂቃ ስንት ምቶችን ይይዛል?",
+                opts: ["40-60", "60-66", "108-120", "169-200"],
+                ans: 3,
+                expAm: "ፕሬስቶ (Presto) 'እጅግ በጣም ፈጣን' ማለት ሲሆን በደቂቃ ከ169 እስከ 200 ምቶች (BPM) ፍጥነት አለው።",
+                expEn: "Presto is a musical tempo marking meaning 'very fast,' typically ranging between 169 and 200 beats per minute (BPM)."
+            },
+            {
+                id: 9, cat: "Music",
+                q: "ኳስን ወደ መሬት አንጥረን ስንይዝ በሙዚቃ ምንን ያመለክታል?",
+                opts: ["ዜማ", "ዳይናሚክ", "ምት", "ቴምፖ"],
+                ans: 2,
+                expAm: "ኳስን ወደ መሬት አንጥሮ መያዝ መደበኛና ተደጋጋሚ የጊዜ ክፍፍል ስላለው በሙዚቃ ውስጥ 'ምት' (Beat)ን በተግባር ያሳያል።",
+                expEn: "Bouncing and catching a ball at regular intervals demonstrates a steady pulse, which represents 'Beat' (ምት) in music."
+            },
+            {
+                id: 10, cat: "Music",
+                q: "mp (mezzo-piano) የሚለው ምልክት ምንን ይወክላል?",
+                opts: ["በጣም ጮክ", "ለስላሳ", "በጣም ለስላሳ", "በመካከለኛ ለስላሳ"],
+                ans: 3,
+                expAm: "mp (mezzo-piano) የጣሊያንኛ የኃይለ ድምፅ ምልክት ሲሆን ትርጉሙ 'በመካከለኛ ደረጃ ለስላሳ' (moderately soft) ማለት ነው።",
+                expEn: "The dynamic marking 'mp' stands for mezzo-piano, which translates to 'moderately soft' in music."
+            },
+            {
+                id: 11, cat: "Visual Arts",
+                q: "ከተዘረዘሩት ውስጥ መሰረታዊ የመስመር አይነት ያልሆነው የቱ ነው?",
+                opts: ["ቋሚ መስመር", "አግድም መስመር", "ሉላዊ መስመር", "ሰያፍ መስመር"],
+                ans: 2,
+                expAm: "ቋሚ፣ አግድም እና ሰያፍ መስመሮች መሰረታዊ የመስመር አይነቶች ናቸው። 'ሉላዊ' (Spherical) ግን ባለ 3ዲ ቅርጽ እንጂ መሰረታዊ የመስመር አይነት አይደለም።",
+                expEn: "Vertical, horizontal, and diagonal lines are basic types of lines. 'Spherical' (ሉላዊ) refers to a 3D form/shape, not a basic line type."
+            },
+            {
+                id: 12, cat: "Music",
+                q: "የድምፅ ከፍታና ዝቅታን (ኸርዝን) መጠን የሚለካው ምንድን ነው?",
+                opts: ["የክረት መጠን (Pitch)", "ዜማ", "ህብረ ድምፅ", "ቴምፖ"],
+                ans: 0,
+                expAm: "የክረት መጠን (Pitch) የአንድን ድምፅ ቅጥነት (ከፍታ) እና ውፍረት (ዝቅታ) በድግግሞሽ (ኸርዝ) የሚለካ የሙዚቃ አላባዊ ነው።",
+                expEn: "Pitch measures how high or low a musical sound is based on the frequency (Hertz) of sound wave vibrations."
+            },
+            {
+                id: 13, cat: "Visual Arts",
+                q: "ቢጫ ቀለም እና ሰማያዊ ቀለም ሲቀላቀሉ ምን ቀለም ይሰጣሉ?",
+                opts: ["ብርትኳናማ", "ወይን ጠጅ", "አረንጓዴ", "ቀይ"],
+                ans: 2,
+                expAm: "ቢጫ እና ሰማያዊ መሥራች (አንደኛ ደረጃ) ቀለማት ሲሆኑ በእኩል ሲቀላቀሉ አረንጓዴ የተባለውን ሁለተኛ ደረጃ ቀለም ይሰጣሉ።",
+                expEn: "Mixing the primary colors yellow and blue produces the secondary color green (አረንጓዴ)."
+            },
+            {
+                id: 14, cat: "Theater",
+                q: "የተውኔት ጽሁፍ በደራሲው ምናብ የሚፈጠር ሆኖ ምን ይባላል?",
+                opts: ["የመከወኛ ቦታ", "ጥበባዊ ግብዓት", "ጽህፈት-ተውኔት", "አዘጋጅ"],
+                ans: 2,
+                expAm: "በደራሲው ምናብ ተፈጥሮ ለመድረክ የሚዘጋጀው የተውኔት ጽሁፍ 'ጽህፈት-ተውኔት' (Playwriting/Script) ይባላል።",
+                expEn: "The written dramatic script created from a playwright's imagination for theatrical performance is called playwriting or script (ጽህፈት-ተውኔት)."
+            },
+            {
+                id: 15, cat: "Music",
+                q: "የሙዚቃን የፍጥነት ልኬት የሚያመለክተው ቃል ማን ይባላል?",
+                opts: ["ቴምፖ", "ዜማ", "ዳይናሚክስ", "ስልተ ምት"],
+                ans: 0,
+                expAm: "ቴምፖ (Tempo) አንድ ሙዚቃ በምን ያህል ፍጥነት ወይም ዝግታ እንደሚጫወት የሚያመለክት የፍጥነት ልኬት ነው።",
+                expEn: "Tempo is the musical term that indicates the speed or pace at which a piece of music is played."
+            },
+            {
+                id: 16, cat: "Music",
+                q: "ሙሉ (Whole) የድምፅ ኖታ ዋጋ ስንት ነው?",
+                opts: ["1 ምት", "2 ምት", "4 ምት", "1/2 ምት"],
+                ans: 2,
+                expAm: "በመደበኛ የሙዚቃ አቆጣጠር (4/4) አንድ ሙሉ የድምፅ ኖታ (Whole Note) የ4 ምት የቆይታ ዋጋ አለው።",
+                expEn: "In standard 4/4 time, a whole note holds a duration value of 4 full beats."
+            },
+            {
+                id: 17, cat: "Dance",
+                q: "በውዝዋዜ ውስጥ ክብ ሰርቶ መሽከርከር፣ ወደፊትና ወደኃላ መንቀሳቀስ ምን ይባላል?",
+                opts: ["የሰውነት አቋቋም", "ጥበባዊ ግብዓት", "ጽህፈት ተውኔት", "የቦታ አያያዝና አጠቃቀም"],
+                ans: 3,
+                expAm: "በውዝዋዜ ወቅት ክብ መስራት፣ ወደፊትና ወደኋላ እንዲሁም ወደ ጎን መንቀሳቀስ የመድረክን 'የቦታ አያያዝና አጠቃቀም' (Space) ያሳያል።",
+                expEn: "Moving in circles, forward, and backward during a dance demonstrates the dance element of Space (spatial awareness and pathways)."
+            },
+            {
+                id: 18, cat: "Visual Arts",
+                q: "ከሚከተሉት ውስጥ መሰረታዊ መስመር የሆነው የቱ ነው?",
+                opts: ["ቋሚ", "አግድም", "ጠመዝማዛ", "ሁሉም መልስ ናቸው"],
+                ans: 3,
+                expAm: "ቋሚ (Vertical)፣ አግድም (Horizontal) እና ጠመዝማዛ (Curved/Wavy) ሁሉም በዕይታ ጥበብ ውስጥ የሚያገለግሉ መሰረታዊ የመስመር አይነቶች ናቸው።",
+                expEn: "Vertical, horizontal, and curved/wavy lines are all fundamental types of lines used in visual arts, so 'All of the above' is correct."
+            },
+            {
+                id: 19, cat: "Music",
+                q: "1/8 የድምፅ ኖታ ምን ያህል የቆይታ ዋጋ አለው?",
+                opts: ["4 ምት", "1 ምት", "1/2 ምት", "2 ምት"],
+                ans: 2,
+                expAm: "አንድ ስምንተኛ (1/8 / Eighth note) የሩብ ኖታ (1 ምት) ግማሽ ስለሆነ የ1/2 (ግማሽ) ምት የቆይታ ዋጋ አለው።",
+                expEn: "An eighth note (1/8 note) is half the duration of a quarter note, giving it a value of 1/2 beat."
+            },
+            {
+                id: 20, cat: "Music",
+                q: "የድምፅን ጩኸትና ልስላሴ መጠን የሚገልጸው የሙዚቃ አላባዊ ምን ይባላል?",
+                opts: ["ኃይለ ድምፅ", "ህብረ ድምፅ", "ቴምፖ", "የጊዜ ቆይታ"],
+                ans: 0,
+                expAm: "ኃይለ ድምፅ (Dynamics) በሙዚቃ ውስጥ ድምፅ ምን ያህል ጮክ ወይም ለስላሳ ሆኖ እንደሚሰማ የሚገልጽ አላባዊ ነው።",
+                expEn: "Dynamics (ኃይለ ድምፅ) is the musical element that describes the loudness or softness of sound."
+            },
+            {
+                id: 21, cat: "Visual Arts",
+                q: "በዕይታ ጥበባት ውስጥ በእንቅስቃሴ የሚፈጠር ምልክት የሆነው አላባዊ የቱ ነው?",
+                opts: ["መስመር", "ቅርጽ", "ቀለም", "ሻካራና ልስላሴ"],
+                ans: 0,
+                expAm: "መስመር (Line) አንድ ነጥብ በወረቀት ወይም በገጽ ላይ ሲንቀሳቀስ የሚፈጠር መሰረታዊ የዕይታ ጥበብ አላባዊ ነው።",
+                expEn: "A Line (መስመር) is defined in visual arts as a mark created by a moving point across a surface."
+            },
+            {
+                id: 22, cat: "Music",
+                q: "ግማሽ (half) የድምፅ ኖታ ስንት የምት ጊዜ ቆይታ አለው?",
+                opts: ["4 ምት", "2 ምት", "1 ምት", "1/2 ምት"],
+                ans: 1,
+                expAm: "ግማሽ ኖታ (Half Note) የሙሉ ኖታ (4 ምት) ግማሽ ስለሆነ የ2 ምት ጊዜ ቆይታ አለው።",
+                expEn: "A half note lasts half as long as a whole note, giving it a duration of 2 beats."
+            },
+            {
+                id: 23, cat: "Visual Arts",
+                q: "ቀይ ቀለም እና ቢጫ ቀለም ሲቀላቀሉ የትኛውን ሁለተኛ ደረጃ ቀለም ይሰጣሉ?",
+                opts: ["አረንጓዴ", "ብርትኳናማ", "ወይን ጠጅ", "ሰማያዊ"],
+                ans: 1,
+                expAm: "ቀይ እና ቢጫ አንደኛ ደረጃ ቀለማት ሲቀላቀሉ ብርትኳናማ (Orange) የተባለውን ሁለተኛ ደረጃ ቀለም ይፈጥራሉ።",
+                expEn: "Combining the primary colors red and yellow creates the secondary color orange (ብርትኳናማ)."
+            },
+            {
+                id: 24, cat: "Dance",
+                q: "የሰውነት ቅርፅን መሰረት ያደረገ አቋቋም የትኛው ጥበብ አላባዊ ነው?",
+                opts: ["የውዝዋዜ", "የሙዚቃ", "የትያትር", "የዕይታ"],
+                ans: 0,
+                expAm: "የሰውነት አቋቋምና ቅርፅ (Body posture/shape) የውዝዋዜ (Dance) ዋነኛ አላባዊ ነው።",
+                expEn: "Body posture and shape are fundamental elements of Dance (ውዝዋዜ), as the human body is the primary instrument of dance."
+            },
+            {
+                id: 25, cat: "Visual Arts",
+                q: "ሦስተኛ ደረጃ ቀለማት (Tertiary colors) ከሚባሉት ውስጥ አንዱ የቱ ነው?",
+                opts: ["ቀይ", "ቢጫ", "ሰማያዊ", "ቢጫማ ብርትኳን"],
+                ans: 3,
+                expAm: "ሦስተኛ ደረጃ ቀለማት የሚገኙት አንደኛ ደረጃ እና ሁለተኛ ደረጃ ቀለማት ሲቀላቀሉ ነው። ቢጫ (1ኛ) እና ብርትኳናማ (2ኛ) ሲቀላቀሉ 'ቢጫማ ብርትኳን' ይሰጣሉ።",
+                expEn: "Tertiary colors are made by mixing a primary color with an adjacent secondary color. Yellow-orange (ቢጫማ ብርትኳን) is a tertiary color, whereas red, yellow, and blue are primary."
+            },
+            {
+                id: 26, cat: "Visual Arts",
+                q: "በቀላሉ ማየትና መረዳት እንድንችል የሚረዳን አዎንታዊና አሉታዊ ባህሪ ያለው የዕይታ ጥበብ አላባዊ የቱ ነው?",
+                opts: ["አካባቢያዊ ቦታ", "ህብረ ቀለም", "ንጣትና ጥቁረት", "ሐረግ"],
+                ans: 0,
+                expAm: "አካባቢያዊ ቦታ (Space) በስዕል ውስጥ በምስሉ የተያዘ 'አዎንታዊ ቦታ' (Positive space) እና በዙሪያው ያለ ክፍት 'አሉታዊ ቦታ' (Negative space) አለው።",
+                expEn: "Space (አካባቢያዊ ቦታ) is the visual art element consisting of positive space (the subject) and negative space (the area around it), which helps viewers clearly perceive the artwork."
+            },
+            {
+                id: 27, cat: "Music",
+                q: "አንድ አስራ ስድስተኛ (1/16) የዕረፍት ኖታ ዋጋ ስንት ነው?",
+                opts: ["1 ምት", "2 ምት", "1/4 ምት", "4 ምት"],
+                ans: 2,
+                expAm: "አንድ አስራ ስድስተኛ (1/16) ኖታ ወይም ዕረፍት የሩብ ኖታ (1 ምት) አንድ አራተኛ ስለሆነ የ1/4 ምት ዋጋ አለው።",
+                expEn: "A sixteenth rest (1/16 rest) has a duration of one-quarter (1/4) of a beat in 4/4 time."
+            },
+            {
+                id: 28, cat: "Music",
+                q: "fff (Fortississimo) የሚለው ምልክት ትርጉሙ ምንድን ነው?",
+                opts: ["በጣም ለስላሳ", "በመካከለኛ ጩኸት", "ለስላሳ", "እጅግ በጣም ጮክ ያለ"],
+                ans: 3,
+                expAm: "fff (Fortississimo) በሙዚቃ ውስጥ 'እጅግ በጣም ጮክ ያለ' (extremely loud) ድምፅን የሚያመለክት የኃይለ ድምፅ ምልክት ነው።",
+                expEn: "Fortississimo (fff) is a dynamic marking instructing musicians to play extremely loudly."
+            },
+            {
+                id: 29, cat: "Music",
+                q: "Adagio የሚለው የቴምፖ አይነት በደቂቃ ምን ያህል ምቶች አሉት?",
+                opts: ["120-169", "40-60", "200", "66-76"],
+                ans: 3,
+                expAm: "አዳጂዮ (Adagio) ዝግ ያለና የተረጋጋ ፍጥነት ሲሆን በደቂቃ ከ66 እስከ 76 ምቶች (BPM) አሉት።",
+                expEn: "Adagio is a slow, stately tempo typically measured at 66–76 beats per minute (BPM)."
+            },
+            {
+                id: 30, cat: "Theater",
+                q: "ትያትር ተዘጋጅቶ በሚቀርብበት ጊዜ በመገኘት የሚታደሙ ሰዎች እነማን ናቸው?",
+                opts: ["ተደራሲያን", "አዘጋጆች", "ተዋንያን", "ደራሲያን"],
+                ans: 0,
+                expAm: "ትያትር በመድረክ ሲቀርብ በመገኘት የሚመለከቱና የሚያደምጡ ሰዎች 'ተደራሲያን' (Audience) ይባላሉ።",
+                expEn: "The people who attend and watch a live theatrical performance are called the Audience (ተደራሲያን)."
+            },
+            {
+                id: 31, cat: "Dance",
+                q: "በአይን መተያየትንና ወገብን ተቃቅፎ መጨፈርን የሚያካትተው የውዝዋዜ አላባዊ የቱ ነው?",
+                opts: ["የቦታ አያያዝ", "ከአጣማሪ ጋር እንቅስቃሴ ማቀናጀት", "የሰውነት አቋቋም", "የስዕል ንድፍ"],
+                ans: 1,
+                expAm: "በአይን መተያየት፣ እጅ ለእጅ ወይም ወገብን ተቃቅፎ በአንድነት መጨፈር 'ከአጣማሪ ጋር እንቅስቃሴ ማቀናጀት' (Partnering/Relationship) ይባላል።",
+                expEn: "Making eye contact and dancing together hand-in-hand or waist-to-waist involves coordinating movement with a partner (ከአጣማሪ ጋር እንቅስቃሴ ማቀናጀት)."
+            },
+            {
+                id: 32, cat: "Film & Media",
+                q: "ካንገት በላይ ያሉ እይታዎችን በመምረጥ የተዋናዩን አትኩረታዊ እንቅስቃሴ ለማሳየት የሚጠቅመው የቀረጻ አይነት የቱ ነው?",
+                opts: ["የቅርብ እይታ", "የመካከለኛ እይታ", "የሩቅ እይታ", "የአጠቃላይ እይታ"],
+                ans: 0,
+                expAm: "የቅርብ እይታ (Close-up Shot) ከአንገት በላይ ፊትን በቅርበት በመቅረጽ የተዋናዩን ስሜትና ጥቃቅን እንቅስቃሴዎች በግልጽ ያሳያል።",
+                expEn: "A Close-up Shot (የቅርብ እይታ) frames the actor from the neck up, highlighting facial expressions and subtle emotional details."
+            },
+            {
+                id: 33, cat: "Visual Arts",
+                q: "ተፈጥራዊ ባህሪ መልክንና ቅርፅን በዓይን መለየት የሚያስችል የዕይታ ጥበብ ዘዴ የቱ ነው?",
+                opts: ["መስመር", "ማመጣጠን", "ቀለም", "ሻካራና ልስላሴ (Texture)"],
+                ans: 3,
+                expAm: "ሻካራና ልስላሴ (Texture) የአንድን ነገር የውጪ ገጽታ (ሻካራነት ወይም ልስላሴ) በመንካት ወይም በዓይን በመመልከት ለመለየት ያስችላል።",
+                expEn: "Texture (ሻካራና ልስላሴ) describes the surface quality of an object—how it feels or appears visually to feel (rough, smooth, soft, etc.)."
+            },
+            {
+                id: 34, cat: "Music",
+                q: "በደቂቃ ከ120-169 የምት ፍጥነት ያለው የቴምፖ አይነት የቱ ነው?",
+                opts: ["Andante", "Allegro", "Largo", "Presto"],
+                ans: 1,
+                expAm: "አሌግሮ (Allegro) ፈጣንና ደስተኛ የሙዚቃ ፍጥነት ሲሆን በደቂቃ ከ120 እስከ 169 ምቶች (BPM) አለው።",
+                expEn: "Allegro means fast, lively, and bright, with a tempo range of approximately 120–169 beats per minute (BPM)."
+            },
+            {
+                id: 35, cat: "Music",
+                q: "በሠው ተፈጥሮ ድምፅ ወይም በሙዚቃ መሳሪያዎች የድምፅ ውስንነት ጥራት ምን ይባላል?",
+                opts: ["ስልተ ምት", "የድምፅ ቀለም (Timber)", "ዜማ", "ቴምፖ"],
+                ans: 1,
+                expAm: "የድምፅ ቀለም (Timbre / Tone Color) አንድን የሙዚቃ መሳሪያ ወይም የሰው ድምፅ ከሌላው ለይተን እንድናውቅ የሚያደርግ ልዩ የድምፅ ጥራት ነው።",
+                expEn: "Timbre (tone color) is the unique quality of a sound that lets us distinguish one musical instrument or human voice from another."
+            },
+            {
+                id: 36, cat: "Visual Arts",
+                q: "የሐረግ ሥራ ዕድሜ ከምን ጋር በማገናዘብ ይገመገማል?",
+                opts: ["ከውዝዋዜ", "ከዘመናዊ ሙዚቃ", "ከልዩ ልዩ ሐውልቶች", "ከፊልም"],
+                ans: 2,
+                expAm: "የሐረግ ሥራ ዕድሜና ታሪካዊ አመጣጥ በሀገራችን ከሚገኙ ልዩ ልዩ ጥንታዊ ሐውልቶች ጋር በማገናዘብ ይገመገማል።",
+                expEn: "The historical age of traditional Ethiopian ornamental pattern work (Harege Sira) is evaluated in relation to various ancient monuments."
+            },
+            {
+                id: 37, cat: "Visual Arts",
+                q: "ባለ ሁለት አውታረ መጠን (2ዲ) የሆነው ምስለ ቅርጽ የቱ ነው?",
+                opts: ["ሉል", "ክብ (ሰርክል)", "ፒራሚድ", "ሲሊንደር"],
+                ans: 1,
+                expAm: "ክብ (Circle) ርዝመትና ስፋት ብቻ ያለው ጠፍጣፋ ባለ 2ዲ ቅርጽ ነው። ሉል፣ ፒራሚድና ሲሊንደር ግን ባለ 3ዲ ቅርጾች ናቸው።",
+                expEn: "A Circle is a flat two-dimensional (2D) shape having only width and height, whereas a sphere, pyramid, and cylinder are 3D forms."
+            },
+            {
+                id: 38, cat: "Theater",
+                q: "ተዋንያን የወከሏቸውን ገጸ-ባህርያት እንዲመስሉ የሚያግዙት ነገሮች ምን ይባላሉ?",
+                opts: ["የመከወኛ ቦታ", "ጥበባዊ ግብዓቶች", "ጽህፈት ተውኔት", "ተደራሲያን"],
+                ans: 1,
+                expAm: "አልባሳት፣ ሜካፕ፣ መብራትና የመድረክ ቁሳቁሶች 'ጥበባዊ ግብዓቶች' (Theatrical Elements/Props & Costumes) ሲሆኑ ተዋንያን ገጸ-ባህርያትን እንዲመስሉ ያግዛሉ።",
+                expEn: "Artistic inputs (ጥበባዊ ግብዓቶች) such as costumes, makeup, lighting, and props help actors convincingly embody their characters."
+            },
+            {
+                id: 39, cat: "Theater",
+                q: "በጽሁፍ የቀረቡ የድርሰቱ አለም ፍጡራንን (ገጸ ባህርያትን) በመወከል የሚያቀርቡ ሰዎች እነማን ናቸው?",
+                opts: ["ከዋኞች", "ተደራሲያን", "አዘጋጆች", "ደራሲያን"],
+                ans: 0,
+                expAm: "ከዋኞች (ተዋንያን / Performers) በተውኔት ጽሁፍ ውስጥ የተፈጠሩ ገጸ-ባህርያትን በመድረክ ላይ ሕይወት ዘርተው የሚያቀርቡ ባለሙያዎች ናቸው።",
+                expEn: "Performers/Actors (ከዋኞች) are the artists who portray and bring written characters to life on stage."
+            },
+            {
+                id: 40, cat: "Visual Arts",
+                q: "የቀለማትን ብርሃናማነትና ጥቁረት ሂደት የምንገልፅበት ዘዴ ምን ይባላል?",
+                opts: ["ሻካልሴ", "የንጣትና ጥቁረት ሂደት (Value)", "ማመጣጠን", "ቅርጽ"],
+                ans: 1,
+                expAm: "የንጣትና ጥቁረት ሂደት (Value) የአንድን ቀለም ከብርሃናማ (ነጭ ሲጨመር) እስከ ጥቁረት (ጥቁር ሲጨመር) ያለውን ደረጃ ይገልጻል።",
+                expEn: "Value (የንጣትና ጥቁረት ሂደት) refers to the lightness or darkness of a color, ranging from bright tints to deep shades."
+            },
+            {
+                id: 41, cat: "Music",
+                q: "በተለምዶ ጎርናና ድምፅ የምንለው (በጎረምሶችና ትልልቅ ሰዎች) ድምጽ ምድብ የቱ ነው?",
+                opts: ["ሶፕራኖ", "አልቶ", "ቴኖር", "ቤዝ"],
+                ans: 3,
+                expAm: "ቤዝ (Bass) በጣም ወፍራምና ጎርናና የሆነው ዝቅተኛው የወንዶች የድምፅ ምድብ ነው።",
+                expEn: "Bass is the deepest and lowest male vocal range, characterized by a rich, resonant, deep tone."
+            },
+            {
+                id: 42, cat: "Film & Media",
+                q: "የፊልም ታሪክ የሚከናወንበትን ቦታ ከነሙሉ ድባቡና አካባቢው የሚያሳየው የቀረጻ አይነት የቱ ነው?",
+                opts: ["የቅርብ እይታ", "የአጠቃላይ እይታ", "የመካከለኛ እይታ", "የሩቅ እይታ"],
+                ans: 1,
+                expAm: "የአጠቃላይ እይታ (Establishing / Wide Shot) የፊልሙ ታሪክ የሚፈጸምበትን ቦታና ሙሉ አካባቢያዊ ድባብ ለተመልካች በስፋት ያስተዋውቃል።",
+                expEn: "An Establishing/General Wide Shot (የአጠቃላይ እይታ) shows the entire location and atmosphere where the film's story takes place."
+            },
+            {
+                id: 43, cat: "Music",
+                q: "f (forte) የሚለው የኃይለ ድምፅ ምልክት ምንን ያመለክታል?",
+                opts: ["ለስላሳ", "ጮክ ያለ ድምፅ", "በጣም ለስላሳ", "በመካከለኛ ጩኸት"],
+                ans: 1,
+                expAm: "f (forte) የጣሊያንኛ ቃል ሲሆን በሙዚቃ ውስጥ 'ጮክ ያለ ድምፅ' (Loud) ማለት ነው።",
+                expEn: "The dynamic marking 'f' stands for forte, meaning 'loud' or 'strong' in music."
+            },
+            {
+                id: 44, cat: "Music",
+                q: "'Largo' የሚለው የቴምፖ አይነት በደቂቃ ምን ያህል የምት ፍጥነት አለው?",
+                opts: ["40-60", "60-66", "66-76", "169-200"],
+                ans: 0,
+                expAm: "ላርጎ (Largo) 'እጅግ በጣም ዝግ ያለ' የሙዚቃ ፍጥነት ሲሆን በደቂቃ ከ40 እስከ 60 ምቶች (BPM) አለው።",
+                expEn: "Largo indicates a very slow and broad musical tempo, typically 40–60 beats per minute (BPM)."
+            },
+            {
+                id: 45, cat: "Dance",
+                q: "ውዝዋዜ ስሜትን ከመግለጽ ባሻገር ምንን ገላጭ ነው?",
+                opts: ["ጩኸትን", "ሐሳብን", "ቀለምን", "ዝምታን"],
+                ans: 1,
+                expAm: "ውዝዋዜ የሰውነት እንቅስቃሴን በመጠቀም ውስጣዊ ስሜትን ብቻ ሳይሆን የተለያዩ 'ሐሳቦችን' (Ideas) እና ታሪኮችን የሚገልጽ ጥበብ ነው።",
+                expEn: "Beyond expressing emotions, dance is an expressive art form used to communicate ideas (ሐሳብን), stories, and cultural meanings."
+            },
+            {
+                id: 46, cat: "Visual Arts",
+                q: "ቀይ ቀለም እና ሰማያዊ ቀለም ሲቀላቀሉ የትኛውን ቀለም ይሰጣሉ?",
+                opts: ["ብርትኳናማ", "ቢጫ", "አረንጓዴ", "ወይን ጠጅ"],
+                ans: 3,
+                expAm: "ቀይ እና ሰማያዊ አንደኛ ደረጃ ቀለማት ሲቀላቀሉ 'ወይን ጠጅ' (Purple/Violet) የተባለውን ሁለተኛ ደረጃ ቀለም ይሰጣሉ።",
+                expEn: "Mixing the primary colors red and blue produces the secondary color purple/violet (ወይን ጠጅ)."
+            },
+            {
+                id: 47, cat: "Music",
+                q: "የተለያዩ ድምፃች ከስልተ ምት ጋር በአንድ ተዋህደው የምናዳምጠው ሙዚቃ ምን ይባላል?",
+                opts: ["የድምፅ ቀለም", "ዳይናሚክ", "ዜማ (Melody)", "ቴምፖ"],
+                ans: 2,
+                expAm: "ዜማ (Melody) የተለያዩ የድምፅ ከፍታዎችና ዝቅታዎች ከስልተ ምት ጋር በቅደም ተከተል ተዋህደው የሚፈጥሩት የሚዘመር የሙዚቃ ሐረግ ነው።",
+                expEn: "Melody (ዜማ) is a meaningful sequence of musical pitches combined with rhythm that forms the main tune we hear and remember."
+            },
+            {
+                id: 48, cat: "Visual Arts",
+                q: "ከሚከተሉት ውስጥ ባለሦስት አውታረ መጠን (3ዲ) ቅርጽ ያልሆነው የቱ ነው?",
+                opts: ["ሉል", "ፒራሚድ", "ኮን", "እኩል አራት ማዕዘን"],
+                ans: 3,
+                expAm: "ሉል፣ ፒራሚድ እና ኮን ባለ 3ዲ ቅርጾች ናቸው። እኩል አራት ማዕዘን (Square) ግን ጠፍጣፋ ባለ 2ዲ ቅርጽ ነው።",
+                expEn: "A sphere, pyramid, and cone are 3D forms. A square (እኩል አራት ማዕዘን) is a flat 2D shape, not 3D."
+            },
+            {
+                id: 49, cat: "Theater",
+                q: "የጥበባዊ ስራዎች ሁሉ የበላይ መሪ የሆነው ባለሙያ ማን ነው?",
+                opts: ["አዘጋጅ", "ተዋናይ", "ተመልካች", "ፀሀፊ"],
+                ans: 0,
+                expAm: "አዘጋጅ (Director) ተዋንያንን፣ የመድረክ ዲዛይንንና ሌሎች ጥበባዊ ግብዓቶችን ሁሉ በማቀናጀት የሚመራ የበላይ ባለሙያ ነው።",
+                expEn: "The Director (አዘጋጅ) is the overall artistic leader who coordinates actors, design, and technical elements to unify the production."
+            },
+            {
+                id: 50, cat: "Music",
+                q: "p (piano) የሚለው የኃይለ ድምፅ ምልክት ትርጉም ምንድን ነው?",
+                opts: ["በጣም ጮክ", "እጅግ ለስላሳ", "ለስላሳ", "መካከለኛ"],
+                ans: 2,
+                expAm: "p (piano) የጣሊያንኛ ቃል ሲሆን በሙዚቃ ውስጥ 'ለስላሳ' (Soft) ድምፅን ያመለክታል።",
+                expEn: "The dynamic marking 'p' stands for piano, instructing musicians to play softly."
+            },
+            {
+                id: 51, cat: "Music",
+                q: "ወፍራም የሴት ድምጽ የሚባለው የድምጽ ምድብ የቱ ነው?",
+                opts: ["ቤዝ", "አልቶ", "ሶፕራኖ", "ቴኖር"],
+                ans: 1,
+                expAm: "አልቶ (Alto) ከሶፕራኖ ዝቅ ያለና ወፍራም የሆነ የሴቶች የድምፅ ምድብ ነው።",
+                expEn: "Alto is the lower, deeper female singing voice range, positioned below soprano."
+            },
+            {
+                id: 52, cat: "Music",
+                q: "በደቂቃ ከ76-108 የምት ፍጥነት ያለው 'Andante' ትርጉሙ ምንድን ነው?",
+                opts: ["እጅግ በጣም ፍጣን", "ዝግታ", "መካከለኛ ዝግታ", "በጣም ፍጣን"],
+                ans: 2,
+                expAm: "አንዳንቴ (Andante) እንደ እግር ጉዞ ፍጥነት ያለ 'መካከለኛ ዝግታ' (at a walking pace / moderately slow) ሲሆን በደቂቃ ከ76-108 ምቶች አሉት።",
+                expEn: "Andante means 'at a walking pace' or moderately slow (መካከለኛ ዝግታ), typically 76–108 BPM."
+            },
+            {
+                id: 53, cat: "Music",
+                q: "ሩብ (quarter) የድምፅ ኖታ ስንት የምት ጊዜ ቆይታ አለው?",
+                opts: ["4 ምት", "1 ምት", "2 ምት", "1/4 ምት"],
+                ans: 1,
+                expAm: "በመደበኛ የሙዚቃ አቆጣጠር አንድ ሩብ ኖታ (Quarter Note) የ1 ሙሉ ምት ጊዜ ቆይታ አለው።",
+                expEn: "In standard 4/4 time, a quarter note receives 1 full beat."
+            },
+            {
+                id: 54, cat: "Visual Arts",
+                q: "ቀይ፣ ቢጫ እና ሰማያዊ ቀለማት በየትኛው ምድብ ይመደባሉ?",
+                opts: ["መሥራች (አንደኛ ደረጃ)", "ሁለተኛ ደረጃ", "ሦስተኛ ደረጃ", "አራተኛ ደረጃ"],
+                ans: 0,
+                expAm: "ቀይ፣ ቢጫ እና ሰማያዊ ከሌሎች ቀለማት ተቀላቅለው የማይገኙ ነገር ግን ሌሎችን ቀለማት የሚፈጥሩ 'መሥራች (አንደኛ ደረጃ) ቀለማት' ናቸው።",
+                expEn: "Red, yellow, and blue are Primary Colors (መሥራች ቀለማት) because they cannot be created by mixing other pigments, yet they form all other colors."
+            },
+            {
+                id: 55, cat: "Music",
+                q: "ሙዚቃን በእኩል የጊዜ ፍሰት በትክክል እንድንጫወት የሚያደርግ የአጨዋወት መሰረት ምን ይባላል?",
+                opts: ["ስልተ ምት", "ቴምፖ", "ዜማ", "ቃና"],
+                ans: 0,
+                expAm: "ስልተ ምት (Rhythm) የድምፅና የዕረፍት ጊዜያትን በእኩል ፍሰት በማቀናጀት ሙዚቃን በትክክለኛ ጊዜ እንድንጫወት የሚያደርግ መሰረት ነው።",
+                expEn: "Rhythm (ስልተ ምት) organizes sounds and silences over time, providing the structured flow needed to perform music accurately."
+            },
+            {
+                id: 56, cat: "Visual Arts",
+                q: "የሐረግ ሥራዎች እና የስዕል ስራዎች ከምን ጋር ተመሳሳይነት አላቸው?",
+                opts: ["ከውዝዋዜ ጋር", "ከሙዚቃ ጋር", "ከፊልም ጋር", "ከድንጋይና ከእንጨት ቅርፃ ቅርጽ ጋር"],
+                ans: 3,
+                expAm: "የሐረግ ሥራዎች፣ ስዕሎች እንዲሁም የድንጋይና የእንጨት ቅርፃ ቅርጾች ሁሉም በዓይን የሚታዩ የዕይታ ጥበብ ዘርፎች በመሆናቸው ተመሳሳይነት አላቸው።",
+                expEn: "Ornamental pattern work (Harege Sira) and painting share close similarities with stone and wood sculpture because all are traditional visual arts."
+            },
+            {
+                id: 57, cat: "Music",
+                q: "በጣም ጮክ ያለ ድምፅን የሚያመለክተው የጣሊያንኛ ቃል ምኅፃረ ቃል የቱ ነው?",
+                opts: ["f", "mf", "ff", "ppp"],
+                ans: 2,
+                expAm: "ff (Fortissimo) 'በጣም ጮክ ያለ' (Very loud) ድምፅን የሚያመለክት ምኅፃረ ቃል ነው።",
+                expEn: "The abbreviation 'ff' stands for fortissimo, which means 'very loud' in Italian musical notation."
+            },
+            {
+                id: 58, cat: "Visual Arts",
+                q: "የነገሮች መጠን በአይናችን እንደተመለከትናቸው በትክክል ተመጣጥኖ መቀመጥ ምን ይባላል?",
+                opts: ["ቅርጽ", "ማመጣጠን (Proportion)", "ሐረግ", "ሻካራነት"],
+                ans: 1,
+                expAm: "ማመጣጠን (Proportion) በአንድ ስዕል ውስጥ ያሉ የአካላት ወይም የነገሮች መጠን እርስ በርሳቸው በትክክል ተመጣጥነው መሳላቸውን ያመለክታል።",
+                expEn: "Proportion (ማመጣጠን) is the principle of art concerned with the accurate size relationship between parts of an object or between different objects."
+            },
+            {
+                id: 59, cat: "Music",
+                q: "ppp በሚለው የኃይለ ድምፅ ምኅፃረ ቃል የሚወከለው የትኛው ነው?",
+                opts: ["እጅግ በጣም የለሰለሰ", "በጣም ለስላሳ", "በመካከለኛ ለስላሳ", "ለስላሳ"],
+                ans: 0,
+                expAm: "ppp (Pianississimo) በሙዚቃ ውስጥ 'እጅግ በጣም የለሰለሰ' (extremely soft) ድምፅን የሚወክል ምልክት ነው።",
+                expEn: "Pianississimo (ppp) indicates that the music should be played extremely softly."
+            },
+            {
+                id: 60, cat: "Film & Media",
+                q: "ከፊል የሰውነት ክፍልን (በሰው ከወገብ በላይ) የሚቀርጸው የካሜራ እይታ ምን ይባላል?",
+                opts: ["የአጠቃላይ እይታ", "የቅርብ እይታ", "የመካከለኛ እይታ", "የሩቅ እይታ"],
+                ans: 2,
+                expAm: "የመካከለኛ እይታ (Medium Shot) አንድን ተዋናይ ከወገቡ በላይ በመቅረጽ የፊት ገጽታውንና የእጅ እንቅስቃሴውን በአንድነት ለማሳየት ያገለግላል።",
+                expEn: "A Medium Shot (የመካከለኛ እይታ) frames a subject from the waist up, capturing both body language and facial expressions."
+            }
+        ];
+
+        const OPTION_LABELS = ["ሀ", "ለ", "ሐ", "መ"];
+        const TEACHER_EMAIL = "mesayferedegn2@gmail.com";
+        const STORAGE_KEY = "grade5_arts_quiz_results_v1";
+
+        // ==================== QUIZ STATE ====================
+        let state = {
+            studentName: "",
+            studentId: "",
+            currentIndex: 0,
+            answers: new Array(QUESTIONS.length).fill(null), // Stores selected option index (irreversible once set)
+            visited: new Array(QUESTIONS.length).fill(false),
+            startTime: null,
+            elapsedSeconds: 0,
+            timerInterval: null,
+            isSubmitted: false,
+            previousScreenBeforeDash: "welcomeScreen"
+        };
+
+        // ==================== NAVIGATION & SCREEN HELPERS ====================
+        function showScreen(screenId) {
+            ["welcomeScreen", "quizScreen", "resultScreen", "teacherScreen"].forEach(id => {
+                document.getElementById(id).classList.add("hidden");
+            });
+            document.getElementById(screenId).classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMessage").textContent = msg;
+            toast.classList.remove("hidden");
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                toast.classList.add("hidden");
+            }, 3200);
+        }
+
+        function formatTime(totalSeconds) {
+            const mins = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
+            const secs = (totalSeconds % 60).toString().padStart(2, "0");
+            return `${mins}:${secs}`;
+        }
+
+        // ==================== START QUIZ ====================
+        function handleStartQuiz(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById("studentName").value.trim();
+            const idInput = document.getElementById("studentId").value.trim();
+            const errBox = document.getElementById("startError");
+
+            if (!nameInput || !idInput) {
+                errBox.classList.remove("hidden");
+                return;
+            }
+            errBox.classList.add("hidden");
+
+            state.studentName = nameInput;
+            state.studentId = idInput;
+            state.currentIndex = 0;
+            state.answers = new Array(QUESTIONS.length).fill(null);
+            state.visited = new Array(QUESTIONS.length).fill(false);
+            state.isSubmitted = false;
+            state.elapsedSeconds = 0;
+            state.startTime = Date.now();
+
+            document.getElementById("displayStudentName").textContent = state.studentName;
+            document.getElementById("displayStudentId").textContent = `ID: ${state.studentId}`;
+
+            // Start timer
+            clearInterval(state.timerInterval);
+            document.getElementById("headerTimer").classList.remove("hidden");
+            document.getElementById("headerTimer").classList.add("inline-flex");
+            document.getElementById("timerDisplay").textContent = "00:00";
+            state.timerInterval = setInterval(() => {
+                state.elapsedSeconds++;
+                document.getElementById("timerDisplay").textContent = formatTime(state.elapsedSeconds);
+            }, 1000);
+
+            showScreen("quizScreen");
+            renderQuestion();
+        }
+
+        // ==================== RENDER CURRENT QUESTION ====================
+        function renderQuestion() {
+            const idx = state.currentIndex;
+            const item = QUESTIONS[idx];
+            state.visited[idx] = true;
+
+            const userChoice = state.answers[idx];
+            const isAnswered = userChoice !== null;
+
+            // Update badges & text
+            document.getElementById("questionNumberBadge").textContent = `ጥያቄ ${item.id} / ${QUESTIONS.length}`;
+            document.getElementById("questionCategoryBadge").textContent = item.cat;
+            document.getElementById("questionText").textContent = `${item.id}. ${item.q}`;
+
+            // Render 4 clickable option buttons
+            const optionsContainer = document.getElementById("optionsContainer");
+            optionsContainer.innerHTML = "";
+
+            item.opts.forEach((optText, optIdx) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.disabled = isAnswered; // Irreversible once answered
+
+                let btnClasses = "w-full text-left p-4 rounded-2xl border-2 transition-all flex items-center justify-between gap-3 ";
+                let badgeClasses = "w-9 h-9 rounded-xl font-bold text-sm flex items-center justify-center shrink-0 transition-colors ";
+                let statusBadge = "";
+
+                if (!isAnswered) {
+                    btnClasses += "bg-white border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 active:scale-[0.99] cursor-pointer shadow-sm";
+                    badgeClasses += "bg-slate-100 text-slate-700";
+                } else {
+                    btnClasses += "cursor-default ";
+                    if (optIdx === item.ans) {
+                        // Correct option always highlighted in green
+                        btnClasses += "bg-emerald-50 border-emerald-500 text-emerald-900 shadow-sm";
+                        badgeClasses += "bg-emerald-600 text-white";
+                        statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-bold shrink-0"><i class="fa-solid fa-check"></i> ትክክለኛ መልስ</span>`;
+                    } else if (optIdx === userChoice && userChoice !== item.ans) {
+                        // Wrong selection highlighted in rose red
+                        btnClasses += "bg-rose-50 border-rose-500 text-rose-900 shadow-sm";
+                        badgeClasses += "bg-rose-600 text-white";
+                        statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-600 text-white text-xs font-bold shrink-0"><i class="fa-solid fa-xmark"></i> የእርስዎ ምርጫ</span>`;
+                    } else {
+                        // Other unselected options dimmed
+                        btnClasses += "bg-slate-50/60 border-slate-200/70 text-slate-400 opacity-70";
+                        badgeClasses += "bg-slate-200 text-slate-500";
+                    }
+                }
+
+                btn.className = btnClasses;
+                btn.innerHTML = `
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <span class="${badgeClasses}">${OPTION_LABELS[optIdx]}</span>
+                        <span class="font-semibold text-sm sm:text-base leading-snug">${optText}</span>
+                    </div>
+                    ${statusBadge}
+                `;
+
+                if (!isAnswered) {
+                    btn.addEventListener("click", () => selectAnswer(optIdx));
+                }
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Instant Feedback & Bilingual Explanation
+            const feedbackBox = document.getElementById("feedbackBox");
+            const feedbackHeader = document.getElementById("feedbackHeader");
+            if (isAnswered) {
+                const isCorrect = userChoice === item.ans;
+                feedbackBox.classList.remove("hidden", "bg-emerald-50/80", "border-emerald-200", "bg-rose-50/80", "border-rose-200");
+                if (isCorrect) {
+                    feedbackBox.classList.add("bg-emerald-50/80", "border-emerald-200");
+                    feedbackHeader.className = "flex items-center gap-2.5 font-bold text-base mb-3 text-emerald-800";
+                    feedbackHeader.innerHTML = `<i class="fa-solid fa-circle-check text-xl text-emerald-600"></i> <span>በጣም ጥሩ! ትክክለኛ መልስ መርጠዋል። (Correct! Great job!)</span>`;
+                } else {
+                    feedbackBox.classList.add("bg-rose-50/80", "border-rose-200");
+                    feedbackHeader.className = "flex items-center gap-2.5 font-bold text-base mb-3 text-rose-800";
+                    feedbackHeader.innerHTML = `<i class="fa-solid fa-circle-xmark text-xl text-rose-600"></i> <span>ስህተት! ትክክለኛው መልስ «${OPTION_LABELS[item.ans]}. ${item.opts[item.ans]}» ነው። (Incorrect — Correct answer highlighted above)</span>`;
+                }
+                document.getElementById("explanationAm").textContent = item.expAm;
+                document.getElementById("explanationEn").textContent = item.expEn;
+            } else {
+                feedbackBox.classList.add("hidden");
+            }
+
+            // Update navigation buttons
+            document.getElementById("backBtn").disabled = idx === 0;
+            const nextBtn = document.getElementById("nextBtn");
+            const nextBtnLabel = document.getElementById("nextBtnLabel");
+            if (idx === QUESTIONS.length - 1) {
+                nextBtn.classList.add("hidden");
+            } else {
+                nextBtn.classList.remove("hidden");
+                nextBtnLabel.textContent = isAnswered ? "ቀጣይ ጥያቄ (Next)" : "ዝለል / ቀጣይ (Skip / Jump Next)";
+            }
+
+            updateProgressStats();
+            renderQuestionMap();
+        }
+
+        // ==================== SELECT ANSWER (IRREVERSIBLE) ====================
+        function selectAnswer(optIdx) {
+            const idx = state.currentIndex;
+            if (state.answers[idx] !== null) return; // Lock check
+
+            state.answers[idx] = optIdx;
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (state.currentIndex < QUESTIONS.length - 1) {
+                state.currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            state.currentIndex = idx;
+            renderQuestion();
+            document.getElementById("questionMapPanel").classList.add("hidden");
+        }
+
+        function toggleQuestionMap() {
+            const panel = document.getElementById("questionMapPanel");
+            panel.classList.toggle("hidden");
+            if (!panel.classList.contains("hidden")) {
+                renderQuestionMap();
+            }
+        }
+
+        function updateProgressStats() {
+            let answered = 0, correct = 0, wrong = 0;
+            state.answers.forEach((ans, i) => {
+                if (ans !== null) {
+                    answered++;
+                    if (ans === QUESTIONS[i].ans) correct++;
+                    else wrong++;
+                }
+            });
+            document.getElementById("statAnswered").textContent = answered;
+            document.getElementById("statCorrect").textContent = correct;
+            document.getElementById("statWrong").textContent = wrong;
+
+            const pct = Math.round((answered / QUESTIONS.length) * 100);
+            document.getElementById("progressBar").style.width = `${pct}%`;
+        }
+
+        function renderQuestionMap() {
+            const grid = document.getElementById("questionMapGrid");
+            grid.innerHTML = "";
+            QUESTIONS.forEach((q, i) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                const ans = state.answers[i];
+                let cls = "h-9 rounded-xl font-bold text-xs transition-all border ";
+
+                if (i === state.currentIndex) {
+                    cls += "ring-2 ring-indigo-600 ring-offset-1 ";
+                }
+
+                if (ans !== null) {
+                    if (ans === q.ans) cls += "bg-emerald-500 text-white border-emerald-600";
+                    else cls += "bg-rose-500 text-white border-rose-600";
+                } else if (state.visited[i]) {
+                    cls += "bg-amber-200 text-amber-900 border-amber-300";
+                } else {
+                    cls += "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200";
+                }
+
+                btn.className = cls;
+                btn.textContent = q.id;
+                btn.onclick = () => jumpToQuestion(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        // ==================== CUSTOM MODAL LOGIC ====================
+        function openModal({ title, message, icon, iconBg, confirmText, confirmBg, onConfirm }) {
+            document.getElementById("modalTitle").textContent = title;
+            document.getElementById("modalMessage").textContent = message;
+            document.getElementById("modalIcon").className = icon;
+            document.getElementById("modalIconWrap").className = `w-11 h-11 rounded-2xl flex items-center justify-center text-xl shrink-0 ${iconBg}`;
+            const confirmBtn = document.getElementById("modalConfirmBtn");
+            confirmBtn.textContent = confirmText;
+            confirmBtn.className = `px-5 py-2.5 rounded-xl text-white font-semibold text-sm shadow-md transition-all ${confirmBg}`;
+            confirmBtn.onclick = () => {
+                closeModal();
+                onConfirm();
+            };
+            document.getElementById("customModal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("customModal").classList.add("hidden");
+        }
+
+        function openSubmitModal() {
+            const unanswered = state.answers.filter(a => a === null).length;
+            const msg = unanswered > 0
+                ? `እስካሁን ያልተመለሱ ${unanswered} ጥያቄዎች አሉ። ፈተናውን አሁን ማስረከብ ይፈልጋሉ? (You still have ${unanswered} unanswered question(s). Are you sure you want to submit now?)`
+                : `ሁሉንም 60 ጥያቄዎች መልሰዋል! ፈተናውን አሁን ማስረከብና ውጤትዎን ማየት ይፈልጋሉ? (You have answered all 60 questions! Ready to submit and view your grade?)`;
+
+            openModal({
+                title: "ፈተናውን አስረክብ (Submit Quiz)",
+                message: msg,
+                icon: "fa-solid fa-paper-plane",
+                iconBg: "bg-emerald-100 text-emerald-600",
+                confirmText: "አዎ፣ አስረክብ (Yes, Submit)",
+                confirmBg: "bg-emerald-600 hover:bg-emerald-700",
+                onConfirm: submitQuiz
+            });
+        }
+
+        // ==================== AUTO-GRADING & SUBMISSION ====================
+        function submitQuiz() {
+            clearInterval(state.timerInterval);
+            state.isSubmitted = true;
+            document.getElementById("headerTimer").classList.add("hidden");
+            document.getElementById("headerTimer").classList.remove("inline-flex");
+
+            let correctCount = 0;
+            let wrongCount = 0;
+            let unansweredCount = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) unansweredCount++;
+                else if (ans === QUESTIONS[i].ans) correctCount++;
+                else wrongCount++;
+            });
+
+            const total = QUESTIONS.length;
+            const percent = Math.round((correctCount / total) * 100);
+            const timeStr = formatTime(state.elapsedSeconds);
+
+            let gradeLabel = "Needs Improvement";
+            if (percent >= 90) gradeLabel = "እጅግ በጣም ጥሩ (A+)";
+            else if (percent >= 80) gradeLabel = "በጣም ጥሩ (A)";
+            else if (percent >= 70) gradeLabel = "ጥሩ (B)";
+            else if (percent >= 50) gradeLabel = "አጥጋቢ (C)";
+            else gradeLabel = "ተጨማሪ ጥረት ያስፈልጋል (F)";
+
+            // Save record to localStorage for Teacher Dashboard
+            const record = {
+                name: state.studentName,
+                id: state.studentId,
+                score: correctCount,
+                total: total,
+                percent: percent,
+                correct: correctCount,
+                wrong: wrongCount,
+                unanswered: unansweredCount,
+                time: timeStr,
+                date: new Date().toLocaleString()
+            };
+            saveResultToStorage(record);
+
+            // Populate Result Screen
+            document.getElementById("resultStudentMeta").textContent = `${record.name} • ID: ${record.id}`;
+            document.getElementById("resScore").textContent = `${record.score}/${record.total}`;
+            document.getElementById("resPercent").textContent = `${record.percent}%`;
+            document.getElementById("resGrade").textContent = gradeLabel;
+            document.getElementById("resTime").textContent = record.time;
+            document.getElementById("resCorrectCount").textContent = record.correct;
+            document.getElementById("resWrongCount").textContent = record.wrong;
+            document.getElementById("resUnansweredCount").textContent = record.unanswered;
+
+            // Build mailto link for mesayferedegn2@gmail.com
+            const subject = encodeURIComponent(`Grade 5 Arts Quiz Score - ${record.name} (${record.id})`);
+            const bodyText = buildEmailReportText(record, gradeLabel);
+            document.getElementById("emailScoreLink").href = `mailto:${TEACHER_EMAIL}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+            window._latestReportText = bodyText;
+
+            // Render full review list (hidden until toggled)
+            document.getElementById("reviewSection").classList.add("hidden");
+            renderReviewList();
+
+            showScreen("resultScreen");
+            showToast("ውጤትዎ በተሳካ ሁኔታ ተመዝግቧል! Score saved to Teacher Dashboard.");
+        }
+
+        function buildEmailReportText(record, gradeLabel) {
+            return `Grade 5 Performing & Visual Arts Quiz Result (የክወናና የዕይታ ጥበባት 5ኛ ክፍል)\n` +
+                   `==================================================\n` +
+                   `Student Full Name: ${record.name}\n` +
+                   `Student ID Number: ${record.id}\n` +
+                   `Final Score: ${record.score} / ${record.total} (${record.percent}%)\n` +
+                   `Performance Grade: ${gradeLabel}\n` +
+                   `Correct Answers: ${record.correct}\n` +
+                   `Wrong Answers: ${record.wrong}\n` +
+                   `Unanswered: ${record.unanswered}\n` +
+                   `Time Taken: ${record.time}\n` +
+                   `Date & Time: ${record.date}\n` +
+                   `==================================================`;
+        }
+
+        // Copy report using execCommand for iframe compatibility
+        function copyScoreReport() {
+            const text = window._latestReportText || "";
+            if (!text) return;
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand("copy");
+                showToast("ሪፖርቱ ተቀድቷል! Report copied to clipboard.");
+            } catch (err) {
+                showToast("መቅዳት አልተቻለም። Could not copy report.");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function toggleReviewSection() {
+            const sec = document.getElementById("reviewSection");
+            sec.classList.toggle("hidden");
+            if (!sec.classList.contains("hidden")) {
+                sec.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        function renderReviewList() {
+            const container = document.getElementById("reviewList");
+            container.innerHTML = "";
+            QUESTIONS.forEach((item, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === item.ans;
+                const isUnanswered = userAns === null;
+
+                let statusBadge = isCorrect
+                    ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-bold"><i class="fa-solid fa-check mr-1"></i>ትክክል (Correct)</span>`
+                    : isUnanswered
+                    ? `<span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold"><i class="fa-solid fa-minus mr-1"></i>ያልተመለሰ (Skipped)</span>`
+                    : `<span class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-700 text-xs font-bold"><i class="fa-solid fa-xmark mr-1"></i>ስህተት (Wrong)</span>`;
+
+                const card = document.createElement("div");
+                card.className = "bg-white rounded-2xl p-5 border border-slate-200 shadow-sm";
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-bold text-indigo-600">ጥያቄ ${item.id} • ${item.cat}</span>
+                        ${statusBadge}
+                    </div>
+                    <p class="font-bold text-slate-900 text-sm sm:text-base mb-3">${item.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm mb-3">
+                        <div class="p-2.5 rounded-xl ${isCorrect ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-50 text-slate-700 border border-slate-200'}">
+                            <strong>የእርስዎ መልስ (Your Answer):</strong> ${isUnanswered ? 'አልተመለሰም (None)' : `${OPTION_LABELS[userAns]}. ${item.opts[userAns]}`}
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200">
+                            <strong>ትክክለኛ መልስ (Correct):</strong> ${OPTION_LABELS[item.ans]}. ${item.opts[item.ans]}
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-600 space-y-1 bg-slate-50 p-3 rounded-xl">
+                        <p><strong class="text-indigo-700">ማብራሪያ (AM):</strong> ${item.expAm}</p>
+                        <p><strong class="text-emerald-700">Explanation (EN):</strong> ${item.expEn}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function resetForNewStudent() {
+            document.getElementById("studentName").value = "";
+            document.getElementById("studentId").value = "";
+            showScreen("welcomeScreen");
+        }
+
+        // ==================== TEACHER DASHBOARD & STORAGE ====================
+        function getStoredResults() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveResultToStorage(record) {
+            try {
+                const list = getStoredResults();
+                list.unshift(record);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+            } catch (e) {
+                // Storage fallback silent handling
+            }
+        }
+
+        function toggleTeacherDashboard() {
+            const teacherScreen = document.getElementById("teacherScreen");
+            if (!teacherScreen.classList.contains("hidden")) {
+                closeTeacherDashboard();
+                return;
+            }
+            // Remember active screen
+            ["welcomeScreen", "quizScreen", "resultScreen"].forEach(id => {
+                if (!document.getElementById(id).classList.contains("hidden")) {
+                    state.previousScreenBeforeDash = id;
+                }
+            });
+            renderTeacherDashboard();
+            showScreen("teacherScreen");
+        }
+
+        function closeTeacherDashboard() {
+            showScreen(state.previousScreenBeforeDash || "welcomeScreen");
+        }
+
+        function renderTeacherDashboard() {
+            const records = getStoredResults();
+            const total = records.length;
+            const avg = total ? Math.round(records.reduce((acc, r) => acc + r.percent, 0) / total) : 0;
+            const high = total ? Math.max(...records.map(r => r.score)) : 0;
+            const passRate = total ? Math.round((records.filter(r => r.percent >= 50).length / total) * 100) : 0;
+
+            document.getElementById("dashTotalStudents").textContent = total;
+            document.getElementById("dashAvgScore").textContent = `${avg}%`;
+            document.getElementById("dashHighScore").textContent = `${high}/60`;
+            document.getElementById("dashPassRate").textContent = `${passRate}%`;
+
+            renderTeacherTable();
+        }
+
+        function renderTeacherTable() {
+            const query = (document.getElementById("dashSearchInput").value || "").toLowerCase().trim();
+            const records = getStoredResults().filter(r =>
+                r.name.toLowerCase().includes(query) || r.id.toLowerCase().includes(query)
+            );
+
+            const tbody = document.getElementById("teacherTableBody");
+            tbody.innerHTML = "";
+
+            if (records.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="py-10 text-center text-slate-400 text-sm">
+                            <i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>
+                            እስካሁን የተመዘገበ ውጤት የለም። (No student submissions recorded yet.)
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            records.forEach((r, idx) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50/80 transition-colors";
+                const badgeCls = r.percent >= 50
+                    ? "bg-emerald-100 text-emerald-700"
+                    : "bg-rose-100 text-rose-700";
+
+                tr.innerHTML = `
+                    <td class="py-3.5 px-4 font-semibold text-slate-500">${idx + 1}</td>
+                    <td class="py-3.5 px-4 font-bold text-slate-900">${r.name}</td>
+                    <td class="py-3.5 px-4 text-slate-600 font-mono text-xs">${r.id}</td>
+                    <td class="py-3.5 px-4 font-bold text-indigo-700">${r.score}/${r.total}</td>
+                    <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeCls}">${r.percent}%</span></td>
+                    <td class="py-3.5 px-4 text-slate-600">${r.time}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-500">${r.date}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportTeacherCSV() {
+            const records = getStoredResults();
+            if (records.length === 0) {
+                showToast("ለማውረድ የተመዘገበ ውጤት የለም። No records to export.");
+                return;
+            }
+            const headers = ["Full Name", "ID Number", "Score", "Total", "Percentage", "Correct", "Wrong", "Unanswered", "Time Taken", "Date"];
+            const rows = records.map(r => [
+                `"${r.name.replace(/"/g, '""')}"`,
+                `"${r.id.replace(/"/g, '""')}"`,
+                r.score, r.total, `${r.percent}%`, r.correct, r.wrong, r.unanswered, r.time, `"${r.date}"`
+            ]);
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "Grade5_Arts_Quiz_Results.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast("CSV ፋይሉ ወርዷል! Gradebook exported.");
+        }
+
+        function openClearDashModal() {
+            openModal({
+                title: "ሁሉንም ውጤቶች ሰርዝ (Clear All Records)",
+                message: "ሁሉንም የተመዘገቡ የተማሪዎች ውጤቶች መሰረዝ ይፈልጋሉ? ይህ ድርጊት አይመለስም። (Are you sure you want to delete all stored student results?)",
+                icon: "fa-solid fa-triangle-exclamation",
+                iconBg: "bg-rose-100 text-rose-600",
+                confirmText: "አዎ፣ ሰርዝ (Yes, Clear)",
+                confirmBg: "bg-rose-600 hover:bg-rose-700",
+                onConfirm: () => {
+                    localStorage.removeItem(STORAGE_KEY);
+                    renderTeacherDashboard();
+                    showToast("ሁሉም ውጤቶች ተሰርዘዋል። All records cleared.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
